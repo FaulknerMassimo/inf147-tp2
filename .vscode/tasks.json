@@ -1,0 +1,35 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build tp2.exe",
+            "detail": "Compile every .cpp except Tests_* into build/tp2.exe",
+            "type": "shell",
+            "command": "mkdir -p build && x86_64-w64-mingw32-g++ -fdiagnostics-color=always -g -O0 $(ls *.cpp | grep -v '^Tests_') -o build/tp2.exe -lgdi32 -static",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": ["$gcc"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Prepare debug",
+            "detail": "Kill any leftover winedbg, then build (winedbg itself is started by launch.json)",
+            "dependsOrder": "sequence",
+            "dependsOn": ["Stop winedbg", "Build tp2.exe"],
+            "problemMatcher": []
+        },
+        {
+            "label": "Stop winedbg",
+            "type": "shell",
+            "command": "pkill -f 'winedbg[.]exe --gdb' || true",
+            "presentation": {
+                "reveal": "never"
+            },
+            "problemMatcher": []
+        }
+    ]
+}

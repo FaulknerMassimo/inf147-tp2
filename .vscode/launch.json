@@ -1,0 +1,27 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug tp2.exe (Wine)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/tp2.exe",
+            "cwd": "${workspaceFolder}",
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "miDebuggerServerAddress": "localhost:12345",
+            "debugServerPath": "/bin/sh",
+            "debugServerArgs": "-c \"cd '${workspaceFolder}' && exec env WINEDEBUG=-all WINEDLLOVERRIDES=mscoree,mshtml= winedbg --gdb --no-start --port 12345 '${workspaceFolder}/build/tp2.exe'\"",
+            "serverStarted": "target remote localhost",
+            "filterStdout": true,
+            "filterStderr": true,
+            "serverLaunchTimeout": 30000,
+            "preLaunchTask": "Prepare debug",
+            "postDebugTask": "Stop winedbg",
+            "setupCommands": [
+                { "text": "set debuginfod enabled off" },
+                { "text": "-enable-pretty-printing", "ignoreFailures": true }
+            ]
+        }
+    ]
+}
